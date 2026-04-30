@@ -87,3 +87,38 @@ Week-8
     }
   ]
 }
+
+
+{
+  "Version": "2012-10-17",
+  "Id": "__default_policy_ID",
+  "Statement": [
+    {
+      "Sid": "__owner_statement",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::905418062728:root"
+      },
+      "Action": "SQS:*",
+      "Resource": "arn:aws:sqs:us-east-1:905418062728:MyQueue1",
+      "Conditions":{
+        "ArnEquals":{
+          "aws:SourceArn":"arn:aws:sns:us-east-1:905418062728:MyTopic2"
+        }
+      }
+    }
+  ]
+}
+
+
+
+def lambda_handler(event, context):
+
+    for record in event['Records']:
+        print("Message received from SQS:")
+        print(record['body'])
+
+    return {
+        'statusCode': 200,
+        'body': 'Message processed successfully'
+    }
