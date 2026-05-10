@@ -150,3 +150,33 @@ sudo mount -t efs -o tls fs-0e4839e4a8220760b:/ efs
 cd efs
 echo "hi">file.txt
 ls
+
+
+Week-2:
+
+
+sudo su
+lsblk
+fdisk /dev/nvme1n1
+m
+p
+n
+p
+w
+lsblk
+mkdir /data
+mkfs.ext4 /dev/nvme1np1
+mount /dev/nvme1np1 /data
+cd /data/
+echo “Hello”>file.txt
+blkid /dev/nvme1np1
+nano /etc/fstab
+UUID=___ /data/ext4 defaults,nofail 0 0
+reboot
+sudo su
+lsblk
+mkdir /data
+mount /dev/nvme1np1 /data
+cd /data
+ls
+cat file.txt
