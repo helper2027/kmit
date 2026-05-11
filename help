@@ -4,6 +4,12 @@ aws s3 ls
  aws configure
 
 
+Week-6:
+
+scp -i jd.pem jd.pem ubuntu@<public IP>:/home/ubuntu
+
+
+
 
 week-9
 sudo su
