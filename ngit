@@ -37,6 +37,8 @@ import RPi.GPIO as GPIO
 import time
 
 GPIO.setmode(GPIO.BCM)
+GPIO_TRIGGER=18 
+GPIO_ECHO=24
 GPIO.setup(GPIO_TRIGGER, GPIO.OUT)
 GPIO.setup(GPIO_ECHO, GPIO.IN)
 
@@ -118,3 +120,32 @@ camera.start_recording('/home/pi/Desktop/video.h264')
 sleep(5)
 camera.stop_recording()
 camera.stop_preview()
+
+
+
+4:
+#include<LiquidCrystal.h>
+LiquidCrystal lcd(12,11,5,4,3,2);
+
+void setup()
+{
+  lcd.begin(16,2);
+  randomSeed(7);
+  pinMode(8,INPUT_PULLUP);
+}
+
+void loop()
+{
+  delay(1000);
+  lcd.setCursor(2,0);
+  lcd.println("DiceValue is");
+  int dr = digitalRead(8);
+  if(dr == LOW){
+    int r = random(1,7);
+    lcd.setCursor(6,1);
+    lcd.println("      ");
+    lcd.setCursor(6,1);
+    lcd.println(r);
+    delay(500);
+  }
+}
