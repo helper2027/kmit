@@ -15,7 +15,7 @@ elif i == 1:
   GPIO.output(3,1)	
   time.sleep(0.1)
 
-LED:
+7:
 
 
 import RPi.GPIO as GPIO
@@ -148,4 +148,138 @@ void loop()
     lcd.println(r);
     delay(500);
   }
+}
+
+
+3:
+
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define OLED_RESET 4
+Adafruit_SSD1306 display(OLED_RESET);
+
+int greenLed = 2;
+int yellowLed = 3;
+int redLed = 4;
+
+int analogValue = 0;
+float voltage = 0;
+int ledDelay = 1000;
+
+void setup()
+{
+    display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+    display.display();
+    display.clearDisplay();
+
+    Serial.begin(9600);
+
+    pinMode(greenLed, OUTPUT);
+    pinMode(yellowLed, OUTPUT);
+    pinMode(redLed, OUTPUT);
+}
+
+void loop()
+{
+    analogValue = analogRead(A0);
+    voltage = 0.0048 * analogValue;
+
+    display.setTextSize(1);
+    display.setTextColor(WHITE);
+    display.setCursor(0, 0);
+    display.println("Battery Voltage");
+    display.println("");
+    display.println("");
+    display.setTextSize(3);
+    display.print(" ");
+    display.println(voltage);
+    display.display();
+    delay(200);
+    display.clearDisplay();
+
+    Serial.println(voltage);
+
+    if (voltage >= 1.35)
+        digitalWrite(greenLed, HIGH);
+    else if (voltage > 1.2 && voltage < 1.35)
+        digitalWrite(yellowLed, HIGH);
+    else if (voltage <= 1.2)
+        digitalWrite(redLed, HIGH);
+
+    delay(ledDelay);
+
+    digitalWrite(redLed, LOW);
+    digitalWrite(yellowLed, LOW);
+    digitalWrite(greenLed, LOW);
+}
+
+
+
+5:
+
+#include <DHT.h>
+
+#define DHTPIN 8
+#define DHTTYPE DHT22
+
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup() {
+  Serial.begin(9600);
+  dht.begin();
+}
+
+void loop() {
+  delay(2000);
+
+  float humidity = dht.readHumidity();
+  float temperature = dht.readTemperature();
+
+  Serial.print("Temperature: ");
+  Serial.print(temperature);
+  Serial.print(" *C ");
+  Serial.print("Humidity: ");
+  Serial.print(humidity);
+  Serial.println(" %");
+}
+
+
+2:
+
+
+int ldr = A0;
+
+int value = 0;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(3, OUTPUT);
+}
+
+void loop() {
+  value = analogRead(ldr);
+  Serial.println("LDR value is :");
+  Serial.println(value);
+
+  if (value < 300) {
+    digitalWrite(3, HIGH);
+  } else {
+    digitalWrite(3, LOW);
+  }
+}
+
+1:
+
+
+void setup() {
+  pinMode(13, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(13, HIGH);
+  delay(1000);
+  digitalWrite(13, LOW);
+  delay(1000);
 }
