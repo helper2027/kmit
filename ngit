@@ -124,6 +124,7 @@ camera.stop_preview()
 
 
 4:
+https://www.tinkercad.com/things/hS734wQxaeu-copy-of-swanky-juttuli-esboo/editel?returnTo=https%3A%2F%2Fwww.tinkercad.com%2Fdashboard%2Fdesigns%2Fcircuits
 #include<LiquidCrystal.h>
 LiquidCrystal lcd(12,11,5,4,3,2);
 
